@@ -1,5 +1,6 @@
 __pycache__/
 *.py[cod]
+*$py.class
 *.egg-info/
 .pytest_cache/
 .altfix-cache/
@@ -8,3 +9,11 @@ __pycache__/
 venv/
 build/
 dist/
+
+# Scratch & local developer files
+.claude/
+.smoke/
+graphify-out/
+*.ps1
+.DS_Store
+Thumbs.db
