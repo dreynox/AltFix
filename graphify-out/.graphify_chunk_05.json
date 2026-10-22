@@ -1,0 +1,74 @@
+{
+  "nodes": [
+    {
+      "id": "acme_analytics_dashboard",
+      "type": "UI_Component",
+      "label": "Acme Analytics Dashboard",
+      "properties": {
+        "description": "Main dashboard for Acme Analytics providing high-level business metrics"
+      }
+    },
+    {
+      "id": "navigation_menu",
+      "type": "UI_Component",
+      "label": "Navigation Menu",
+      "properties": {
+        "items": [
+          "Overview",
+          "Reports",
+          "Settings",
+          "Billing",
+          "Users"
+        ]
+      }
+    },
+    {
+      "id": "revenue_metric",
+      "type": "Metric",
+      "label": "Total Revenue",
+      "properties": {
+        "value": "$48,210",
+        "trend": "up 12% this month"
+      }
+    },
+    {
+      "id": "active_users_metric",
+      "type": "Metric",
+      "label": "Active Users",
+      "properties": {
+        "value": "3,904",
+        "trend": "down 3% this month"
+      }
+    },
+    {
+      "id": "monthly_signups_chart",
+      "type": "Chart",
+      "label": "Monthly Signups",
+      "properties": {
+        "type": "Bar Chart"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "navigation_menu",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "revenue_metric",
+      "label": "displays"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "active_users_metric",
+      "label": "displays"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "monthly_signups_chart",
+      "label": "displays"
+    }
+  ]
+}

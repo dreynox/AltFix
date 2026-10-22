@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    {
+      "id": "northwind_data_tools",
+      "label": "Northwind Data Tools",
+      "type": "Organization/Product",
+      "description": "Northwind Data Tools as identified from the logo"
+    }
+  ],
+  "edges": []
+}

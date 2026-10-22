@@ -70,6 +70,37 @@ GENERIC_ALT_TEXTS = {
     "picture1",
     "picture2",
     "screen shot1",
+    # Single words that name the medium or the kind of object rather than
+    # describing the content. "A terminal showing a deploy" is fine, the bare
+    # word "terminal" is not.
+    "terminal",
+    "console",
+    "window",
+    "screen",
+    "preview",
+    "illustration",
+    "render",
+    "output",
+    "log",
+    "logs",
+    "code",
+    "snippet",
+    "sample",
+    "demo",
+    "gif",
+    "video",
+    "avatar",
+    "profile",
+    "table",
+    "list",
+    "button",
+    "form",
+    "menu",
+    "toolbar",
+    "sidebar",
+    "panel",
+    "map",
+    "photo gallery",
 }
 
 # Phrases that indicate the alt text is a file reference rather than a description.

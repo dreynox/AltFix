@@ -1,0 +1,47 @@
+[
+  {
+    "id": "Client",
+    "type": "Component",
+    "label": "Client",
+    "properties": {}
+  },
+  {
+    "id": "API_Gateway",
+    "type": "Component",
+    "label": "API Gateway",
+    "properties": {}
+  },
+  {
+    "id": "Auth_Service",
+    "type": "Component",
+    "label": "Auth Service",
+    "properties": {}
+  },
+  {
+    "id": "Database",
+    "type": "Component",
+    "label": "Database",
+    "properties": {}
+  },
+  {
+    "source": "Client",
+    "target": "API_Gateway",
+    "type": "FLOW",
+    "label": "request",
+    "properties": {}
+  },
+  {
+    "source": "API_Gateway",
+    "target": "Auth_Service",
+    "type": "FLOW",
+    "label": "verify",
+    "properties": {}
+  },
+  {
+    "source": "API_Gateway",
+    "target": "Database",
+    "type": "FLOW",
+    "label": "read",
+    "properties": {}
+  }
+]

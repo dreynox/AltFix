@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "revenue_by_quarter",
+      "type": "chart",
+      "label": "Revenue by quarter",
+      "properties": {
+        "description": "A bar chart showing revenue for four quarters (Q1, Q2, Q3, Q4).",
+        "data": {
+          "Q1": 120,
+          "Q2": 190,
+          "Q3": 150,
+          "Q4": 240
+        }
+      }
+    }
+  ],
+  "edges": []
+}

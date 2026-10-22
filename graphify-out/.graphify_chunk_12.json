@@ -1,0 +1,24 @@
+{
+  "nodes": [
+    {
+      "id": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_mixed\\docs\\landscape.png",
+      "type": "file",
+      "label": "landscape.png",
+      "description": "An image file depicting a stylized landscape with mountains, a tree, and a sun."
+    },
+    {
+      "id": "landscape_visual",
+      "type": "visual_element",
+      "label": "Landscape Illustration",
+      "description": "A minimalist illustration featuring blue sky, grey mountains, a green tree, and a yellow sun."
+    }
+  ],
+  "edges": [
+    {
+      "from": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_mixed\\docs\\landscape.png",
+      "to": "landscape_visual",
+      "label": "contains",
+      "description": "The image file contains this visual illustration."
+    }
+  ]
+}

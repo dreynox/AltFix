@@ -1,0 +1,81 @@
+{
+  "nodes": [
+    {
+      "id": "acme_analytics_dashboard",
+      "type": "UI_Screen",
+      "label": "Acme Analytics Dashboard",
+      "properties": {
+        "description": "Main dashboard for Acme Analytics showing key performance indicators and navigation.",
+        "elements": [
+          "Sidebar navigation",
+          "Total Revenue card",
+          "Active Users card",
+          "Monthly signups bar chart"
+        ]
+      }
+    },
+    {
+      "id": "dashboard_sidebar",
+      "type": "UI_Component",
+      "label": "Dashboard Sidebar",
+      "properties": {
+        "navigation_items": [
+          "Overview",
+          "Reports",
+          "Settings",
+          "Billing",
+          "Users"
+        ]
+      }
+    },
+    {
+      "id": "total_revenue_card",
+      "type": "UI_Component",
+      "label": "Total Revenue Card",
+      "properties": {
+        "value": "$48,210",
+        "trend": "up 12% this month"
+      }
+    },
+    {
+      "id": "active_users_card",
+      "type": "UI_Component",
+      "label": "Active Users Card",
+      "properties": {
+        "value": "3,904",
+        "trend": "down 3% this month"
+      }
+    },
+    {
+      "id": "monthly_signups_chart",
+      "type": "UI_Component",
+      "label": "Monthly Signups Chart",
+      "properties": {
+        "type": "Bar Chart",
+        "description": "Visual representation of monthly signups"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "dashboard_sidebar",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "total_revenue_card",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "active_users_card",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "monthly_signups_chart",
+      "label": "contains"
+    }
+  ]
+}

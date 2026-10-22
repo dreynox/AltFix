@@ -127,6 +127,8 @@ class LocalVisionClient:
         }
         if self.config.seed is not None:
             payload["seed"] = self.config.seed
+        if self.config.reasoning_effort:
+            payload["reasoning_effort"] = self.config.reasoning_effort
 
         try:
             response = httpx.post(
@@ -138,6 +140,20 @@ class LocalVisionClient:
             raise ModelUnavailable(
                 f"Request to {self.config.chat_url} failed: {exc}"
             ) from exc
+
+        if response.status_code == 400 and payload.get("reasoning_effort"):
+            # The server does not understand reasoning_effort. Retry without it.
+            payload.pop("reasoning_effort", None)
+            try:
+                response = httpx.post(
+                    self.config.chat_url,
+                    json=payload,
+                    timeout=self.config.timeout,
+                )
+            except Exception as exc:  # noqa: BLE001
+                raise ModelUnavailable(
+                    f"Request to {self.config.chat_url} failed: {exc}"
+                ) from exc
 
         if response.status_code != 200:
             raise ModelUnavailable(
@@ -158,6 +174,9 @@ class LocalVisionClient:
         if isinstance(text, list):
             # Some servers return content parts.
             text = "".join(part.get("text", "") for part in text if isinstance(part, dict))
+        if not text:
+            # Reasoning-only responses: fall back to the reasoning field.
+            text = message.get("reasoning_content") or ""
 
         usage = data.get("usage") or {}
         return ModelResponse(

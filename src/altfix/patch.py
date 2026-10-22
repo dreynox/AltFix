@@ -85,11 +85,12 @@ def plan_edit(occurrence: ImageOccurrence, new_alt: str) -> Optional[AltEdit]:
 
     ``None`` means the alt text is already correct and nothing has to change.
     """
+    syntax = occurrence.syntax or occurrence.fmt
     if occurrence.alt_span is not None:
         start, end = occurrence.alt_span
-        if occurrence.fmt == "markdown":
+        if syntax == "markdown":
             replacement = escape_markdown_alt(new_alt)
-        elif occurrence.fmt == "html":
+        elif syntax == "html":
             replacement = escape_html_attr(new_alt)
         else:
             replacement = escape_rst_alt(new_alt)
@@ -107,9 +108,9 @@ def plan_edit(occurrence: ImageOccurrence, new_alt: str) -> Optional[AltEdit]:
 
     if occurrence.insert_span is not None:
         start, end = occurrence.insert_span
-        if occurrence.fmt == "html":
+        if syntax == "html":
             replacement = occurrence.insert_template.format(escape_html_attr(new_alt))
-        elif occurrence.fmt == "rst":
+        elif syntax == "rst":
             replacement = occurrence.insert_template.format(escape_rst_alt(new_alt))
         else:
             replacement = occurrence.insert_template.format(escape_markdown_alt(new_alt))

@@ -1,0 +1,749 @@
+{
+  "nodes": [
+    {
+      "id": "aim",
+      "label": "AltFix Problem Statement & Goals",
+      "file_type": "document",
+      "source_file": "D:\\Hackathons\\MLH\\AIM.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "aim_altfix_goal",
+      "label": "AltFix Goal",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\AIM.md",
+      "source_location": "7",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "aim_success_targets",
+      "label": "Success Targets",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\AIM.md",
+      "source_location": "9-16",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "aim_architecture_summary",
+      "label": "Architecture Summary",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\AIM.md",
+      "source_location": "30-39",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan",
+      "label": "AltFix Implementation Plan",
+      "file_type": "document",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_phase_1_scaffold",
+      "label": "Phase 1: Scaffold",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": "7-24",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_phase_2_scanner_classifier_patcher",
+      "label": "Phase 2: Scanner + Classifier + Patcher",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": "27-52",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_phase_3_describer_quality_cache",
+      "label": "Phase 3: Describer + Quality + Cache",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": "55-75",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_phase_4_evaluation_infrastructure",
+      "label": "Phase 4: Evaluation Infrastructure",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": "77-96",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_phase_5_iterate_prompts_rules",
+      "label": "Phase 5: Iterate on Prompts & Rules",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": "99-112",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_phase_6_pr_review_commands",
+      "label": "Phase 6: PR + Review Commands",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": "115-130",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_phase_7_demo_polish",
+      "label": "Phase 7: Demo + Polish",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": "132-152",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "results",
+      "label": "AltFix Evaluation Results",
+      "file_type": "document",
+      "source_file": "D:\\Hackathons\\MLH\\results\\RESULTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "results_metrics",
+      "label": "Evaluation Metrics",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\results\\RESULTS.md",
+      "source_location": "22-38",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "smoke_box_hello_dashboard",
+      "label": "Hello Dashboard UI Element",
+      "file_type": "image",
+      "source_file": "D:\\Hackathons\\MLH\\.smoke\\box.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "revenue_chart_01",
+      "type": "Chart",
+      "label": "Revenue by quarter",
+      "properties": {
+        "file": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_charts\\docs\\quarterly-revenue.png",
+        "description": "Bar chart showing revenue across four quarters."
+      }
+    },
+    {
+      "id": "q1_revenue",
+      "type": "DataPoint",
+      "label": "Q1 Revenue",
+      "properties": {
+        "value": 120,
+        "quarter": "Q1"
+      }
+    },
+    {
+      "id": "q2_revenue",
+      "type": "DataPoint",
+      "label": "Q2 Revenue",
+      "properties": {
+        "value": 190,
+        "quarter": "Q2"
+      }
+    },
+    {
+      "id": "q3_revenue",
+      "type": "DataPoint",
+      "label": "Q3 Revenue",
+      "properties": {
+        "value": 150,
+        "quarter": "Q3"
+      }
+    },
+    {
+      "id": "q4_revenue",
+      "type": "DataPoint",
+      "label": "Q4 Revenue",
+      "properties": {
+        "value": 240,
+        "quarter": "Q4"
+      }
+    },
+    {
+      "id": "eval_fixtures_repo_charts_docs_terminal_output_npm_run_deploy",
+      "label": "npm run deploy",
+      "file_type": "image",
+      "source_file": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_charts\\docs\\terminal-output.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "eval_fixtures_repo_charts_docs_terminal_output_deployment_process",
+      "label": "Deployment Process",
+      "file_type": "concept",
+      "source_file": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_charts\\docs\\terminal-output.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "user_growth_chart",
+      "type": "Chart",
+      "label": "Weekly active users chart",
+      "properties": {
+        "description": "A line chart showing a steady increase in weekly active users from Monday to Sunday.",
+        "trend": "Increasing",
+        "x_axis": "Days of the week (Mon-Sun)",
+        "y_axis": "Number of active users"
+      }
+    },
+    {
+      "id": "weekly_active_users",
+      "type": "Metric",
+      "label": "Weekly Active Users",
+      "properties": {
+        "description": "Metric tracking the number of users active on a weekly basis"
+      }
+    },
+    {
+      "id": "acme_analytics_dashboard",
+      "type": "UI_Component",
+      "label": "Acme Analytics Dashboard",
+      "properties": {
+        "description": "Main dashboard for Acme Analytics providing high-level business metrics"
+      }
+    },
+    {
+      "id": "navigation_menu",
+      "type": "UI_Component",
+      "label": "Navigation Menu",
+      "properties": {
+        "items": [
+          "Overview",
+          "Reports",
+          "Settings",
+          "Billing",
+          "Users"
+        ]
+      }
+    },
+    {
+      "id": "revenue_metric",
+      "type": "Metric",
+      "label": "Total Revenue",
+      "properties": {
+        "value": "$48,210",
+        "trend": "up 12% this month"
+      }
+    },
+    {
+      "id": "active_users_metric",
+      "type": "Metric",
+      "label": "Active Users",
+      "properties": {
+        "value": "3,904",
+        "trend": "down 3% this month"
+      }
+    },
+    {
+      "id": "monthly_signups_chart",
+      "type": "Chart",
+      "label": "Monthly Signups",
+      "properties": {
+        "type": "Bar Chart"
+      }
+    },
+    {
+      "id": "revenue_by_quarter",
+      "type": "chart",
+      "label": "Revenue by quarter",
+      "properties": {
+        "description": "A bar chart showing revenue for four quarters (Q1, Q2, Q3, Q4).",
+        "data": {
+          "Q1": 120,
+          "Q2": 190,
+          "Q3": 150,
+          "Q4": 240
+        }
+      }
+    },
+    {
+      "id": "weekly_active_users_chart",
+      "label": "Weekly active users chart",
+      "type": "chart",
+      "properties": {
+        "description": "A line chart showing a steady increase in weekly active users from Monday to Sunday.",
+        "trend": "upward"
+      }
+    },
+    {
+      "id": "user_growth_metric",
+      "label": "User Growth",
+      "type": "metric",
+      "properties": {
+        "description": "The daily active user count shows a consistent upward trend throughout the week."
+      }
+    },
+    {
+      "id": "northwind_data_tools",
+      "label": "Northwind Data Tools",
+      "type": "Organization/Product",
+      "description": "Northwind Data Tools as identified from the logo"
+    },
+    {
+      "id": "Client",
+      "label": "Client",
+      "type": "Component",
+      "description": "The initiator of the request flow"
+    },
+    {
+      "id": "API_Gateway",
+      "label": "API Gateway",
+      "type": "Component",
+      "description": "Entry point for requests, orchestrates flow to auth and database"
+    },
+    {
+      "id": "Auth_Service",
+      "label": "Auth Service",
+      "type": "Component",
+      "description": "Service responsible for verifying requests"
+    },
+    {
+      "id": "Database",
+      "label": "Database",
+      "type": "Component",
+      "description": "Data storage accessed by the API Gateway"
+    },
+    {
+      "id": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_mixed\\docs\\landscape.png",
+      "type": "file",
+      "label": "landscape.png",
+      "description": "An image file depicting a stylized landscape with mountains, a tree, and a sun."
+    },
+    {
+      "id": "landscape_visual",
+      "type": "visual_element",
+      "label": "Landscape Illustration",
+      "description": "A minimalist illustration featuring blue sky, grey mountains, a green tree, and a yellow sun."
+    },
+    {
+      "id": "report_png",
+      "label": "report.png",
+      "type": "file",
+      "properties": {
+        "path": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_rst\\docs\\report.png",
+        "description": "Line chart showing weekly active users from Monday to Sunday, exhibiting a steady upward trend throughout the week."
+      }
+    },
+    {
+      "id": "weekly_active_users",
+      "label": "Weekly Active Users",
+      "type": "metric",
+      "properties": {
+        "trend": "increasing",
+        "period": "weekly"
+      }
+    },
+    {
+      "id": "acme_analytics_dashboard",
+      "type": "UI_Screen",
+      "label": "Acme Analytics Dashboard",
+      "properties": {
+        "description": "Main dashboard for Acme Analytics showing key performance indicators and navigation.",
+        "elements": [
+          "Sidebar navigation",
+          "Total Revenue card",
+          "Active Users card",
+          "Monthly signups bar chart"
+        ]
+      }
+    },
+    {
+      "id": "dashboard_sidebar",
+      "type": "UI_Component",
+      "label": "Dashboard Sidebar",
+      "properties": {
+        "navigation_items": [
+          "Overview",
+          "Reports",
+          "Settings",
+          "Billing",
+          "Users"
+        ]
+      }
+    },
+    {
+      "id": "total_revenue_card",
+      "type": "UI_Component",
+      "label": "Total Revenue Card",
+      "properties": {
+        "value": "$48,210",
+        "trend": "up 12% this month"
+      }
+    },
+    {
+      "id": "active_users_card",
+      "type": "UI_Component",
+      "label": "Active Users Card",
+      "properties": {
+        "value": "3,904",
+        "trend": "down 3% this month"
+      }
+    },
+    {
+      "id": "monthly_signups_chart",
+      "type": "UI_Component",
+      "label": "Monthly Signups Chart",
+      "properties": {
+        "type": "Bar Chart",
+        "description": "Visual representation of monthly signups"
+      }
+    },
+    {
+      "id": "Northwind Data Tools",
+      "type": "Organization",
+      "properties": {
+        "name": "Northwind Data Tools",
+        "description": "Organization identified from logo"
+      }
+    },
+    {
+      "id": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_screenshots\\docs\\northwind-logo.png",
+      "type": "File",
+      "properties": {
+        "name": "northwind-logo.png",
+        "path": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_screenshots\\docs\\northwind-logo.png",
+        "contentType": "image/png"
+      }
+    },
+    {
+      "id": "npm_run_deploy",
+      "label": "npm run deploy",
+      "type": "command",
+      "properties": {
+        "description": "Command to build and deploy the project to production"
+      }
+    },
+    {
+      "id": "production_environment",
+      "label": "Production Environment",
+      "type": "environment",
+      "properties": {
+        "description": "The target environment for project deployment"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "aim",
+      "target": "aim_altfix_goal",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\AIM.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "aim",
+      "target": "aim_success_targets",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\AIM.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "aim",
+      "target": "aim_architecture_summary",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\AIM.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan",
+      "target": "plan_phase_1_scaffold",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan",
+      "target": "plan_phase_2_scanner_classifier_patcher",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan",
+      "target": "plan_phase_3_describer_quality_cache",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan",
+      "target": "plan_phase_4_evaluation_infrastructure",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan",
+      "target": "plan_phase_5_iterate_prompts_rules",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan",
+      "target": "plan_phase_6_pr_review_commands",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan",
+      "target": "plan_phase_7_demo_polish",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "results",
+      "target": "results_metrics",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\results\\RESULTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "results",
+      "target": "plan_phase_4_evaluation_infrastructure",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "D:\\Hackathons\\MLH\\results\\RESULTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "from": "revenue_chart_01",
+      "to": "q1_revenue",
+      "label": "contains"
+    },
+    {
+      "from": "revenue_chart_01",
+      "to": "q2_revenue",
+      "label": "contains"
+    },
+    {
+      "from": "revenue_chart_01",
+      "to": "q3_revenue",
+      "label": "contains"
+    },
+    {
+      "from": "revenue_chart_01",
+      "to": "q4_revenue",
+      "label": "contains"
+    },
+    {
+      "source": "eval_fixtures_repo_charts_docs_terminal_output_npm_run_deploy",
+      "target": "eval_fixtures_repo_charts_docs_terminal_output_deployment_process",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_charts\\docs\\terminal-output.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "from": "user_growth_chart",
+      "to": "weekly_active_users",
+      "label": "visualizes"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "navigation_menu",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "revenue_metric",
+      "label": "displays"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "active_users_metric",
+      "label": "displays"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "monthly_signups_chart",
+      "label": "displays"
+    },
+    {
+      "from": "weekly_active_users_chart",
+      "to": "user_growth_metric",
+      "label": "represents",
+      "type": "visualizes"
+    },
+    {
+      "from": "Client",
+      "to": "API_Gateway",
+      "label": "request",
+      "description": "Client sends a request to the API Gateway"
+    },
+    {
+      "from": "API_Gateway",
+      "to": "Auth_Service",
+      "label": "verify",
+      "description": "API Gateway verifies the request with the Auth Service"
+    },
+    {
+      "from": "API_Gateway",
+      "to": "Database",
+      "label": "read",
+      "description": "API Gateway reads data from the Database"
+    },
+    {
+      "from": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_mixed\\docs\\landscape.png",
+      "to": "landscape_visual",
+      "label": "contains",
+      "description": "The image file contains this visual illustration."
+    },
+    {
+      "from": "report_png",
+      "to": "weekly_active_users",
+      "label": "visualizes"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "dashboard_sidebar",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "total_revenue_card",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "active_users_card",
+      "label": "contains"
+    },
+    {
+      "from": "acme_analytics_dashboard",
+      "to": "monthly_signups_chart",
+      "label": "contains"
+    },
+    {
+      "from": "D:\\Hackathons\\MLH\\eval\\fixtures\\repo_screenshots\\docs\\northwind-logo.png",
+      "to": "Northwind Data Tools",
+      "type": "represents"
+    },
+    {
+      "from": "npm_run_deploy",
+      "to": "production_environment",
+      "label": "deploys_to",
+      "properties": {
+        "status": "successful",
+        "details": "compiled 42 modules in 3.2s"
+      }
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "altfix_implementation_lifecycle",
+      "label": "AltFix Implementation Phases",
+      "nodes": [
+        "plan_phase_1_scaffold",
+        "plan_phase_2_scanner_classifier_patcher",
+        "plan_phase_3_describer_quality_cache",
+        "plan_phase_4_evaluation_infrastructure",
+        "plan_phase_5_iterate_prompts_rules",
+        "plan_phase_6_pr_review_commands",
+        "plan_phase_7_demo_polish"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\Hackathons\\MLH\\PLAN.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

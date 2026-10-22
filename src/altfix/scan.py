@@ -118,6 +118,10 @@ class ImageOccurrence:
 
     The ``alt_span`` / ``insert_span`` fields describe precisely where the
     alt text lives in the file so that a patch touches nothing else.
+
+    ``fmt`` is the format of the *file* (used to pick the context rules) and
+    ``syntax`` is the markup the image is written in (used to write the
+    patch). They differ for raw HTML inside a Markdown file.
     """
 
     file_path: str
@@ -126,6 +130,7 @@ class ImageOccurrence:
     line_start: int
     col_start: int
     src: str
+    syntax: str = ""
     alt_text: str = ""
     #: Character span of the existing alt text (may be empty for ``![]()``).
     alt_span: Optional[tuple[int, int]] = None
@@ -325,6 +330,7 @@ def scan_markdown(text: str, file_path: str, ranges: list[tuple[int, int]]) -> l
             line_start=line,
             col_start=col,
             src=src,
+            syntax="markdown",
             alt_text=alt,
             alt_span=(match.start("alt"), match.end("alt")),
         )
@@ -351,17 +357,28 @@ def scan_markdown(text: str, file_path: str, ranges: list[tuple[int, int]]) -> l
             line_start=line,
             col_start=col,
             src=src,
+            syntax="markdown",
             alt_text=alt,
             alt_span=(match.start("alt"), match.end("alt")),
         )
         occurrence.__dict__.update(_markdown_context(text, match.start(), match.end()))
         found.append(occurrence)
 
+    # Markdown files may embed raw HTML, which is common in READMEs and
+    # always used in MDX. Pick those images up as well.
+    for occurrence in scan_html(text, file_path, ranges, fmt="markdown"):
+        found.append(occurrence)
+
     return found
 
 
-def scan_html(text: str, file_path: str, ranges: list[tuple[int, int]]) -> list[ImageOccurrence]:
-    """Scan HTML text for ``<img>`` elements."""
+def scan_html(
+    text: str,
+    file_path: str,
+    ranges: list[tuple[int, int]],
+    fmt: str = "html",
+) -> list[ImageOccurrence]:
+    """Scan text for ``<img>`` elements."""
     found: list[ImageOccurrence] = []
     for match in HTML_IMG_RE.finditer(text):
         if _in_ranges(ranges, match.start()):
@@ -405,17 +422,21 @@ def scan_html(text: str, file_path: str, ranges: list[tuple[int, int]]) -> list[
 
         occurrence = ImageOccurrence(
             file_path=file_path,
-            fmt="html",
+            fmt=fmt,
             kind="img",
             line_start=line,
             col_start=col,
             src=src,
+            syntax="html",
             alt_text=alt_text,
             alt_span=alt_span,
             insert_span=insert_span,
             insert_template=insert_template,
         )
-        occurrence.__dict__.update(_html_context(text, match.start(), match.end()))
+        if fmt == "html":
+            occurrence.__dict__.update(_html_context(text, match.start(), match.end()))
+        else:
+            occurrence.__dict__.update(_markdown_context(text, match.start(), match.end()))
         found.append(occurrence)
 
     return found
@@ -476,6 +497,7 @@ def scan_rst(text: str, file_path: str, ranges: list[tuple[int, int]]) -> list[I
             line_start=line,
             col_start=col,
             src=src,
+            syntax="rst",
             alt_text=alt_text,
             alt_span=alt_span,
             insert_span=insert_span,

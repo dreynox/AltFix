@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    {
+      "id": "user_growth_chart",
+      "type": "Chart",
+      "label": "Weekly active users chart",
+      "properties": {
+        "description": "A line chart showing a steady increase in weekly active users from Monday to Sunday.",
+        "trend": "Increasing",
+        "x_axis": "Days of the week (Mon-Sun)",
+        "y_axis": "Number of active users"
+      }
+    },
+    {
+      "id": "weekly_active_users",
+      "type": "Metric",
+      "label": "Weekly Active Users",
+      "properties": {
+        "description": "Metric tracking the number of users active on a weekly basis"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "user_growth_chart",
+      "to": "weekly_active_users",
+      "label": "visualizes"
+    }
+  ]
+}

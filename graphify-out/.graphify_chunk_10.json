@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "Client",
+      "label": "Client",
+      "type": "Component",
+      "description": "The initiator of the request flow"
+    },
+    {
+      "id": "API_Gateway",
+      "label": "API Gateway",
+      "type": "Component",
+      "description": "Entry point for requests, orchestrates flow to auth and database"
+    },
+    {
+      "id": "Auth_Service",
+      "label": "Auth Service",
+      "type": "Component",
+      "description": "Service responsible for verifying requests"
+    },
+    {
+      "id": "Database",
+      "label": "Database",
+      "type": "Component",
+      "description": "Data storage accessed by the API Gateway"
+    }
+  ],
+  "edges": [
+    {
+      "from": "Client",
+      "to": "API_Gateway",
+      "label": "request",
+      "description": "Client sends a request to the API Gateway"
+    },
+    {
+      "from": "API_Gateway",
+      "to": "Auth_Service",
+      "label": "verify",
+      "description": "API Gateway verifies the request with the Auth Service"
+    },
+    {
+      "from": "API_Gateway",
+      "to": "Database",
+      "label": "read",
+      "description": "API Gateway reads data from the Database"
+    }
+  ]
+}

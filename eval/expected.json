@@ -1,0 +1,49 @@
+{
+  "description": "Hand labelled ground truth for the AltFix evaluation set. Each entry records one image that the scanner is expected to find, together with the classification a human gave it and whether AltFix should rewrite its alt text.",
+  "labelling_rules": [
+    "missing: no alt text at all, or an empty alt attribute",
+    "low_quality: alt text exists but names the medium or the file instead of the content",
+    "ok: alt text already describes the content, AltFix must not touch it",
+    "decorative: badge or spacer, AltFix must not touch it"
+  ],
+  "images": [
+    {"file": "repo_dashboard/README.md", "line": 5, "src": "docs/dashboard.png", "alt": "Acme Analytics dashboard", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_dashboard/README.md", "line": 11, "src": "docs/revenue-bar.png", "alt": "Quarterly revenue bar chart", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_dashboard/README.md", "line": 15, "src": "docs/dashboard.png", "alt": "screenshot", "expected_class": "low_quality", "should_fix": true},
+    {"file": "repo_dashboard/README.md", "line": 19, "src": "docs/users-line.png", "alt": "Weekly active users line chart", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_dashboard/README.md", "line": 25, "src": "docs/dashboard.png", "alt": "", "expected_class": "missing", "should_fix": true},
+    {"file": "repo_dashboard/README.md", "line": 29, "src": "docs/revenue-bar.png", "alt": "Revenue by quarter", "expected_class": "ok", "should_fix": false},
+
+    {"file": "repo_charts/README.md", "line": 7, "src": "docs/quarterly-revenue.png", "alt": "", "expected_class": "missing", "should_fix": true},
+    {"file": "repo_charts/README.md", "line": 13, "src": "docs/user-growth.png", "alt": "Users over time", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_charts/README.md", "line": 19, "src": "docs/terminal-output.png", "alt": "", "expected_class": "missing", "should_fix": true},
+    {"file": "repo_charts/README.md", "line": 23, "src": "docs/terminal-output.png", "alt": "terminal", "expected_class": "low_quality", "should_fix": true},
+
+    {"file": "repo_diagrams/README.md", "line": 5, "src": "docs/request-flow.png", "alt": "Request flow diagram", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_diagrams/README.md", "line": 12, "src": "docs/request-flow.png", "alt": "A flowchart with four boxes connected by arrows", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_diagrams/README.md", "line": 17, "src": "docs/northwind-logo.png", "alt": "Northwind", "expected_class": "ok", "should_fix": false},
+
+    {"file": "repo_screenshots/README.md", "line": 5, "src": "docs/login-screen.png", "alt": "", "expected_class": "missing", "should_fix": true},
+    {"file": "repo_screenshots/README.md", "line": 9, "src": "docs/login-screen.png", "alt": "login-screen", "expected_class": "low_quality", "should_fix": true},
+    {"file": "repo_screenshots/README.md", "line": 13, "src": "docs/terminal-output.png", "alt": "Terminal showing a successful deploy", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_screenshots/README.md", "line": 17, "src": "docs/northwind-logo.png", "alt": "Northwind DATA TOOLS wordmark logo", "expected_class": "ok", "should_fix": false},
+
+    {"file": "repo_mixed/README.md", "line": 5, "src": "docs/landscape.png", "alt": "A landscape with mountains and a pine tree", "expected_class": "ok", "should_fix": false},
+    {"file": "repo_mixed/README.md", "line": 7, "src": "docs/build-badge.png", "alt": "Build Status", "expected_class": "decorative", "should_fix": false},
+    {"file": "repo_mixed/README.md", "line": 9, "src": "docs/build-badge.png", "alt": "Build Status", "expected_class": "decorative", "should_fix": false},
+    {"file": "repo_mixed/README.md", "line": 13, "src": "docs/spacer.png", "alt": "", "expected_class": "decorative", "should_fix": false},
+    {"file": "repo_mixed/README.md", "line": 17, "src": "docs/landscape.png", "alt": "diagram", "expected_class": "low_quality", "should_fix": true},
+    {"file": "repo_mixed/README.md", "line": 19, "src": "docs/landscape.png", "alt": "Screenshot", "expected_class": "low_quality", "should_fix": true},
+
+    {"file": "repo_html/docs/index.html", "line": 11, "src": "architecture.png", "alt": "", "expected_class": "missing", "should_fix": true},
+    {"file": "repo_html/docs/index.html", "line": 15, "src": "architecture.png", "alt": "", "expected_class": "missing", "should_fix": true},
+
+    {"file": "repo_rst/docs/report.rst", "line": 6, "src": "report.png", "alt": "", "expected_class": "missing", "should_fix": true},
+    {"file": "repo_rst/docs/report.rst", "line": 10, "src": "report.png", "alt": "", "expected_class": "missing", "should_fix": true},
+    {"file": "repo_rst/docs/report.rst", "line": 14, "src": "report.png", "alt": "Weekly active users rising from Monday to Sunday", "expected_class": "ok", "should_fix": false}
+  ],
+  "excluded": [
+    {"file": "repo_dashboard/README.md", "line": 22, "src": "docs/dashboard.png", "reason": "inside a fenced code block"},
+    {"file": "repo_html/docs/index.html", "line": 17, "src": "architecture.png", "reason": "inside a pre/code element"}
+  ]
+}

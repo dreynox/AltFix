@@ -23,12 +23,15 @@ DEFAULT_BASE_URL = "http://localhost:1234/v1"
 DEFAULT_MODEL = "qwen3.5-9b"
 DEFAULT_TEMPERATURE = 0.2
 DEFAULT_SEED = 42
-DEFAULT_MAX_TOKENS = 200
+DEFAULT_MAX_TOKENS = 512
 DEFAULT_MAX_IMAGE_DIM = 1024
 DEFAULT_TIMEOUT = 180.0
 DEFAULT_CONTEXT_LENGTH = 4096
 DEFAULT_PROMPT_VERSION = "v1"
 DEFAULT_CACHE_DIR = ".altfix-cache"
+#: "none" asks reasoning models not to emit a thinking block. Servers that do
+#: not understand the field are handled by the client, which retries without it.
+DEFAULT_REASONING_EFFORT = "none"
 
 CONFIG_FILENAMES = ("altfix.toml", ".altfix.toml")
 
@@ -49,6 +52,7 @@ class Config:
     prompt_version: str = DEFAULT_PROMPT_VERSION
     cache_dir: str = DEFAULT_CACHE_DIR
     max_alt_length: int = 125
+    reasoning_effort: str = DEFAULT_REASONING_EFFORT
 
     @property
     def chat_url(self) -> str:
@@ -124,6 +128,7 @@ def load_config(config_file: Optional[str] = None, **overrides: Any) -> Config:
         "ALTFIX_PROMPT_VERSION": "prompt_version",
         "ALTFIX_CACHE_DIR": "cache_dir",
         "ALTFIX_MAX_ALT_LENGTH": "max_alt_length",
+        "ALTFIX_REASONING_EFFORT": "reasoning_effort",
     }
     for env_name, field_name in env_map.items():
         raw = os.environ.get(env_name)
