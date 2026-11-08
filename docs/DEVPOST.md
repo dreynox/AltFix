@@ -56,3 +56,4 @@ We evaluated AltFix against our synthetic benchmark suite of 28 documentation im
 - **Live OCR Integration**: Adding local OCR (like Tesseract or PaddleOCR) to enhance reading of small text in screenshots.
 - **Multi-lingual Alt Text**: Supporting multi-language document translation for internationalized open-source projects.
 - **Pre-commit Hook**: Publishing an official `pre-commit` hook to automatically catch missing alt text before commits are pushed.
+

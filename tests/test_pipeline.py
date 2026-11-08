@@ -220,3 +220,36 @@ class TestCli:
         result = runner.invoke(app, ["scan", str(docs), "--report"])
         assert result.exit_code == 0
         assert "directory summary" in result.stdout.lower()
+
+    def test_demo_command(self):
+        runner = CliRunner()
+        result = runner.invoke(app, ["demo"])
+        assert result.exit_code == 0
+        assert "AltFix demo" in result.stdout
+
+    def test_model_info_command(self, monkeypatch):
+        from altfix import client
+
+        monkeypatch.setattr(client.LocalVisionClient, "server_diagnostics", lambda self: "Mock Server Diagnostics OK")
+        runner = CliRunner()
+        result = runner.invoke(app, ["model-info"])
+        assert result.exit_code == 0
+        assert "Mock Server Diagnostics OK" in result.stdout
+
+    def test_review_command(self, docs, monkeypatch):
+        from altfix import pipeline
+
+        monkeypatch.setattr(pipeline, "LocalVisionClient", lambda config: StubClient())
+        runner = CliRunner()
+        result = runner.invoke(app, ["review", str(docs)])
+        assert result.exit_code == 0
+        assert "proposed alt:" in result.stdout
+
+    def test_pr_dry_run(self, docs, monkeypatch):
+        from altfix import pipeline
+
+        monkeypatch.setattr(pipeline, "LocalVisionClient", lambda config: StubClient())
+        runner = CliRunner()
+        result = runner.invoke(app, ["pr", str(docs)])
+        assert result.exit_code == 0
+        assert "Nothing was written" in result.stdout

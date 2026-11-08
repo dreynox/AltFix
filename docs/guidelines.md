@@ -55,3 +55,4 @@ Users can step through each proposal:
 - `[e]dit`: Refine the proposed text interactively.
 - `[s]kip`: Leave the image unmodified.
 - `[q]uit`: Stop and review staged patches.
+

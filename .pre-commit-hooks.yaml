@@ -1,0 +1,9 @@
+- id: altfix-scan
+  name: AltFix Documentation Image Scan
+  description: Scan documentation for missing or low quality image alt text
+  entry: altfix scan
+  language: python
+  types_or: [markdown, rst, html]
+  pass_filenames: false
+  always_run: true
+

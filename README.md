@@ -120,13 +120,35 @@ altfix fix . --no-cache    # ignore the cache entirely
 
 | Command | What it does |
 | --- | --- |
-| `altfix scan PATH` | List every image with missing or low quality alt text. `--json` for machine readable output. |
-| `altfix fix PATH --dry-run` | Describe the images and show the diff without writing anything (the default). |
-| `altfix fix PATH --apply` | Write the changes. |
+| `altfix scan PATH` | List every image with missing or low quality alt text. `--json` for JSON output, `--report` for directory breakdown summary. |
+| `altfix fix PATH --dry-run` | Describe the images and show the diff without writing anything (default). `--jobs / -j` for parallel worker threads. |
+| `altfix fix PATH --apply` | Write the changes directly to disk. |
 | `altfix pr PATH --apply` | Create a branch, commit and open a pull request with `gh`, or print the exact manual steps. |
-| `altfix review PATH` | Walk through each proposal and accept, edit or skip it before writing. |
-| `altfix demo` | Run the whole thing on the bundled sample repository. |
+| `altfix review PATH` | Interactively walk through each proposal and accept (`a`), edit (`e`), skip (`s`) or quit (`q`). |
+| `altfix demo` | Run the complete pipeline on the bundled sample repository with pre-generated or live inference. |
 | `altfix model-info` | Show the configured backend and whether it is reachable. |
+
+---
+
+## GitHub Action & CI/CD
+
+Integrate AltFix into your documentation repository to catch missing alt text on pull requests:
+
+```yaml
+name: Accessibility Check
+on: [pull_request]
+jobs:
+  check-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dreynox/AltFix@main
+        with:
+          path: "."
+          fail-on-missing: "true"
+```
+
+For accessibility principles, WCAG 2.2 alignment and the rationale behind the 125-character boundary, see [`docs/guidelines.md`](docs/guidelines.md).
 
 ---
 

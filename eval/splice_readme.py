@@ -85,3 +85,4 @@ def splice_readme(json_path: Path = RESULTS_JSON, readme_path: Path = README_MD)
 if __name__ == "__main__":
     success = splice_readme()
     sys.exit(0 if success else 1)
+
