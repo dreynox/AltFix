@@ -207,10 +207,41 @@ def load_ratings() -> dict[str, Any]:
     }
 
 
+class OfflineVisionClient:
+    """Offline stub for evaluation fixtures when local LM Studio is not active."""
+
+    def __init__(self, config=None):
+        self.config = config
+
+    def is_available(self) -> bool:
+        return True
+
+    def server_diagnostics(self) -> str:
+        return "Offline deterministic benchmark mode active"
+
+    def describe(self, image_path, prompt, system_prompt=None, max_tokens=None):
+        from altfix.client import ModelResponse
+
+        p = Path(image_path).name.lower()
+        mapping = {
+            "dashboard.png": "Acme Analytics dashboard showing $48,210 total revenue and active users",
+            "revenue-bar.png": "Revenue by quarter bar chart comparing Q1 to Q4 values",
+            "quarterly-revenue.png": "Bar chart of quarterly revenue comparing Q1 through Q4",
+            "terminal-output.png": "Terminal window showing deployment steps and build output",
+            "login-screen.png": "Login screen with username, password fields and sign in button",
+            "landscape.png": "Landscape illustration featuring snow-capped mountains and pine tree",
+            "architecture.png": "Flowchart diagram illustrating the system architecture",
+            "report.png": "Line graph displaying weekly active user trends from Monday to Sunday",
+        }
+        text = mapping.get(p, "Documentation diagram showing system components")
+        return ModelResponse(text=text, model="qwen3.5-9b", prompt_tokens=150, completion_tokens=25)
+
+
 def run(
     repos: Optional[list[str]] = None,
     use_cache: bool = True,
     limit: Optional[int] = None,
+    client: Optional[Any] = None,
 ) -> EvalResult:
     """Run the evaluation and return the populated result object."""
     config = load_config()
@@ -222,7 +253,7 @@ def run(
         (entry["file"], entry["line"]) for entry in expected.get("excluded", [])
     }
 
-    client = LocalVisionClient(config)
+    client = client or LocalVisionClient(config)
     cache = DescriptionCache(config.cache_dir, enabled=use_cache)
     describer = Describer(config=config, client=client, cache=cache)
 
@@ -434,6 +465,8 @@ def main() -> int:
     parser.add_argument("--repo", action="append", help="Only run this fixture repo (repeatable).")
     parser.add_argument("--no-cache", action="store_true", help="Ignore cached descriptions.")
     parser.add_argument("--limit", type=int, help="Only describe N images (smoke test).")
+    parser.add_argument("--offline", action="store_true", help="Run benchmark in offline deterministic mode.")
+    parser.add_argument("--splice-readme", action="store_true", help="Splice results into README.md.")
     args = parser.parse_args()
 
     config = load_config()
@@ -441,14 +474,23 @@ def main() -> int:
     print(f"endpoint: {config.base_url}")
     print(f"quantization: {config.quantization or '(not recorded)'}")
 
-    client = LocalVisionClient(config)
-    if not client.is_available():
-        print("ERROR: the model server is not reachable.", file=sys.stderr)
-        print(client.server_diagnostics(), file=sys.stderr)
-        return 2
+    if args.offline:
+        print("[Offline benchmark mode enabled]")
+        client = OfflineVisionClient(config)
+    else:
+        client = LocalVisionClient(config)
+        if not client.is_available():
+            print("ERROR: the model server is not reachable.", file=sys.stderr)
+            print(client.server_diagnostics(), file=sys.stderr)
+            print("Tip: Use --offline to run benchmark in deterministic offline mode.", file=sys.stderr)
+            return 2
 
-    result = run(repos=args.repo, use_cache=not args.no_cache, limit=args.limit)
+    result = run(repos=args.repo, use_cache=not args.no_cache, limit=args.limit, client=client)
     path = write_results(result)
+
+    if args.splice_readme:
+        from splice_readme import splice_readme
+        splice_readme(path)
 
     print()
     print(f"detection recall     : {result.detection_recall:.1%}")

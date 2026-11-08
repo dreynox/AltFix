@@ -1,0 +1,14 @@
+key,file,line,src,old_alt,new_alt,score
+repo_charts/README.md:7,repo_charts/README.md,7,docs/quarterly-revenue.png,,Bar chart of quarterly revenue comparing Q1 through Q4,2
+repo_charts/README.md:19,repo_charts/README.md,19,docs/terminal-output.png,,Terminal window showing deployment steps and build output,2
+repo_charts/README.md:23,repo_charts/README.md,23,docs/terminal-output.png,terminal,Terminal window showing deployment steps and build output,1
+repo_dashboard/README.md:15,repo_dashboard/README.md,15,docs/dashboard.png,screenshot,"Acme Analytics dashboard showing $48,210 total revenue and active users",2
+repo_dashboard/README.md:25,repo_dashboard/README.md,25,docs/dashboard.png,,"Acme Analytics dashboard showing $48,210 total revenue and active users",2
+repo_html/docs/index.html:11,repo_html/docs/index.html,11,architecture.png,,Flowchart diagram illustrating the system architecture,2
+repo_html/docs/index.html:15,repo_html/docs/index.html,15,architecture.png,,Flowchart diagram illustrating the system architecture,2
+repo_mixed/README.md:17,repo_mixed/README.md,17,docs/landscape.png,diagram,Landscape illustration featuring snow-capped mountains and pine tree,2
+repo_mixed/README.md:19,repo_mixed/README.md,19,docs/landscape.png,Screenshot,Landscape illustration featuring snow-capped mountains and pine tree,2
+repo_rst/docs/report.rst:6,repo_rst/docs/report.rst,6,report.png,,Line graph displaying weekly active user trends from Monday to Sunday,2
+repo_rst/docs/report.rst:10,repo_rst/docs/report.rst,10,report.png,,Line graph displaying weekly active user trends from Monday to Sunday,2
+repo_screenshots/README.md:5,repo_screenshots/README.md,5,docs/login-screen.png,,"Login screen with username, password fields and sign in button",2
+repo_screenshots/README.md:9,repo_screenshots/README.md,9,docs/login-screen.png,login-screen,"Login screen with username, password fields and sign in button",2
