@@ -1,0 +1,26 @@
+name: AltFix Check
+
+on:
+  pull_request:
+    paths:
+      - '**.md'
+      - '**.markdown'
+      - '**.mdx'
+      - '**.rst'
+      - '**.html'
+  workflow_dispatch:
+
+jobs:
+  accessibility:
+    name: Check Image Alt Text
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run AltFix Action
+        uses: ./
+        with:
+          path: "."
+          fail-on-missing: "false"
+          show-all: "false"

@@ -1,0 +1,79 @@
+name: "AltFix Documentation Image Accessibility Checker"
+description: "Scan technical documentation (Markdown, HTML, RST, MDX) for missing or low-quality alt text"
+author: "Rayhaan Shaikh"
+branding:
+  icon: "eye"
+  color: "blue"
+
+inputs:
+  path:
+    description: "Directory or file to scan for documentation images"
+    required: false
+    default: "."
+  fail-on-missing:
+    description: "Fail the workflow if missing or low-quality alt text is found"
+    required: false
+    default: "true"
+  show-all:
+    description: "Include images that already have valid alt text in output"
+    required: false
+    default: "false"
+
+outputs:
+  missing-count:
+    description: "Number of images with missing alt text"
+    value: ${{ steps.scan.outputs.missing }}
+  low-quality-count:
+    description: "Number of images with low quality alt text"
+    value: ${{ steps.scan.outputs.low_quality }}
+  ok-count:
+    description: "Number of images with valid alt text"
+    value: ${{ steps.scan.outputs.ok }}
+  decorative-count:
+    description: "Number of decorative/badge images"
+    value: ${{ steps.scan.outputs.decorative }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install AltFix
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install "${{ github.action_path }}"
+
+    - name: Run AltFix scan
+      id: scan
+      shell: bash
+      run: |
+        EXTRA_FLAGS=""
+        if [ "${{ inputs.show-all }}" = "true" ]; then
+          EXTRA_FLAGS="$EXTRA_FLAGS --all"
+        fi
+
+        altfix scan "${{ inputs.path }}" --report $EXTRA_FLAGS
+
+        # Generate JSON summary for outputs
+        JSON_OUT=$(altfix scan "${{ inputs.path }}" --json $EXTRA_FLAGS)
+        MISSING=$(echo "$JSON_OUT" | python -c "import sys, json; print(json.load(sys.stdin)['counts']['missing'])")
+        LOW_Q=$(echo "$JSON_OUT" | python -c "import sys, json; print(json.load(sys.stdin)['counts']['low_quality'])")
+        OK=$(echo "$JSON_OUT" | python -c "import sys, json; print(json.load(sys.stdin)['counts']['ok'])")
+        DECORATIVE=$(echo "$JSON_OUT" | python -c "import sys, json; print(json.load(sys.stdin)['counts']['decorative'])")
+
+        echo "missing=$MISSING" >> "$GITHUB_OUTPUT"
+        echo "low_quality=$LOW_Q" >> "$GITHUB_OUTPUT"
+        echo "ok=$OK" >> "$GITHUB_OUTPUT"
+        echo "decorative=$DECORATIVE" >> "$GITHUB_OUTPUT"
+
+        if [ "${{ inputs.fail-on-missing }}" = "true" ]; then
+          TOTAL_ISSUES=$((MISSING + LOW_Q))
+          if [ "$TOTAL_ISSUES" -gt 0 ]; then
+            echo "::error::AltFix found $MISSING missing and $LOW_Q low-quality alt text image(s)."
+            exit 1
+          fi
+        fi
