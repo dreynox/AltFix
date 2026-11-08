@@ -27,6 +27,7 @@ from .classify import ImageClass, classify
 
 DOC_EXTENSIONS = {
     ".md": "markdown",
+    ".markdown": "markdown",
     ".mdx": "markdown",
     ".rst": "rst",
     ".html": "html",
@@ -284,12 +285,38 @@ def _html_context(text: str, start: int, end: int) -> dict[str, Optional[str]]:
         heading = _squeeze(re.sub(r"<[^>]+>", " ", match.group("text")), 200)
     before = _squeeze(re.sub(r"<[^>]+>", " ", text[max(0, start - 400):start]))
     after = _squeeze(re.sub(r"<[^>]+>", " ", text[end:end + 400]))
+
+    caption = None
+    fig_start = text.rfind("<figure", 0, start)
+    if fig_start != -1:
+        fig_end = text.find("</figure>", end)
+        if fig_end != -1 and text.find("</figure>", fig_start, start) == -1:
+            fig_content = text[fig_start:fig_end]
+            cap_match = re.search(r"<figcaption\b[^>]*>(?P<cap>.*?)</figcaption>", fig_content, re.IGNORECASE | re.DOTALL)
+            if cap_match:
+                caption = _squeeze(re.sub(r"<[^>]+>", " ", cap_match.group("cap")), 250)
+    if caption is None:
+        window = text[max(0, start - 300):min(len(text), end + 300)]
+        cap_match = re.search(r"<figcaption\b[^>]*>(?P<cap>.*?)</figcaption>", window, re.IGNORECASE | re.DOTALL)
+        if cap_match:
+            caption = _squeeze(re.sub(r"<[^>]+>", " ", cap_match.group("cap")), 250)
+
+    link = None
+    a_start = text.rfind("<a ", 0, start)
+    if a_start != -1:
+        a_end = text.find("</a>", end)
+        if a_end != -1 and text.find("</a>", a_start, start) == -1:
+            a_tag = text[a_start:text.find(">", a_start) + 1]
+            href_match = re.search(r"\bhref\s*=\s*(?:\"(?P<dq>[^\"]*)\"|'(?P<sq>[^']*)'|(?P<uq>[^\s>]+))", a_tag, re.IGNORECASE)
+            if href_match:
+                link = href_match.group("dq") or href_match.group("sq") or href_match.group("uq")
+
     return {
         "context_heading": heading,
         "context_before": before or None,
         "context_after": after or None,
-        "context_link": None,
-        "context_caption": None,
+        "context_link": link or None,
+        "context_caption": caption or None,
     }
 
 
@@ -455,6 +482,7 @@ def scan_rst(text: str, file_path: str, ranges: list[tuple[int, int]]) -> list[I
         body_start = match.end()
         alt_option = None
         cursor = body_start
+        existing_indent = None
         for line in text[body_start:].splitlines(keepends=True):
             if not line.strip():
                 cursor += len(line)
@@ -463,10 +491,13 @@ def scan_rst(text: str, file_path: str, ranges: list[tuple[int, int]]) -> list[I
             if indent <= len(base_indent):
                 break
             option = RST_OPTION_RE.match(line.rstrip("\n"))
-            if option and option.group("name").lower() == "alt" and alt_option is None:
-                # The match was made against the line alone, so shift the
-                # value offset into document coordinates.
-                alt_option = (option, cursor)
+            if option:
+                if existing_indent is None:
+                    existing_indent = line[:indent]
+                if option.group("name").lower() == "alt" and alt_option is None:
+                    # The match was made against the line alone, so shift the
+                    # value offset into document coordinates.
+                    alt_option = (option, cursor)
             cursor += len(line)
 
         line, col = _line_of(text, match.start())
@@ -488,7 +519,8 @@ def scan_rst(text: str, file_path: str, ranges: list[tuple[int, int]]) -> list[I
             else:
                 line_end += 1
             insert_span = (line_end, line_end)
-            insert_template = f"{base_indent}   :alt: {{}}\n"
+            option_indent = existing_indent if existing_indent is not None else f"{base_indent}   "
+            insert_template = f"{option_indent}:alt: {{}}\n"
 
         occurrence = ImageOccurrence(
             file_path=file_path,

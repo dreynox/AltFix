@@ -178,6 +178,23 @@ class TestHtml:
         images = scan_html(text)
         assert images[0].context_heading == "Install"
 
+    def test_html_figcaption_context(self):
+        text = (
+            "<figure>\n"
+            '  <img src="arch.png" alt="">\n'
+            "  <figcaption>System Architecture v2</figcaption>\n"
+            "</figure>"
+        )
+        images = scan_html(text)
+        assert len(images) == 1
+        assert images[0].context_caption == "System Architecture v2"
+
+    def test_html_link_context(self):
+        text = '<a href="https://example.com/docs"><img src="icon.png" alt=""></a>'
+        images = scan_html(text)
+        assert len(images) == 1
+        assert images[0].context_link == "https://example.com/docs"
+
 
 class TestRst:
     def test_image_with_alt(self):
@@ -194,6 +211,12 @@ class TestRst:
         assert images[0].alt_text == ""
         assert images[0].insert_span is not None
         assert ":alt:" in images[0].insert_template
+
+    def test_image_without_alt_matches_indent(self):
+        text = ".. image:: img/photo.png\n    :width: 200px\n"
+        images = scan_rst(text)
+        assert len(images) == 1
+        assert images[0].insert_template.startswith("    :alt:")
 
     def test_figure(self):
         text = ".. figure:: img/plot.png\n\n   The caption.\n"
@@ -225,3 +248,13 @@ class TestSpans:
         image = scan_text(text, "d", fmt).images[0]
         start, end = image.alt_span
         assert text[start:end] == image.alt_text
+
+
+class TestDocExtensions:
+    def test_markdown_extension_scanned(self, tmp_path):
+        from altfix.scan import iter_doc_files
+
+        doc = tmp_path / "guide.markdown"
+        doc.write_text("![alt](img.png)", encoding="utf-8")
+        files = list(iter_doc_files(tmp_path))
+        assert doc in files

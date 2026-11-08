@@ -184,9 +184,39 @@ class TestCli:
         assert result.exit_code == 0
         assert "![A solid red rectangle" in (docs / "docs" / "README.md").read_text(encoding="utf-8")
 
+    def test_run_fix_parallel_jobs(self, docs, monkeypatch):
+        from altfix import pipeline
+
+        monkeypatch.setattr(pipeline, "LocalVisionClient", lambda config: StubClient())
+        result = run_fix(docs, config=make_config(docs), dry_run=True, jobs=2)
+        assert result.tasks
+        assert result.tasks[0].description is not None
+        assert result.tasks[0].description.ok
+
+    def test_duplicate_description_detection(self, tmp_path, monkeypatch):
+        from PIL import Image
+        from altfix import pipeline
+
+        (tmp_path / "img1.png").touch()
+        Image.new("RGB", (8, 8), (255, 0, 0)).save(tmp_path / "img1.png")
+        Image.new("RGB", (8, 8), (0, 255, 0)).save(tmp_path / "img2.png")
+        (tmp_path / "doc.md").write_text("![](img1.png)\n![](img2.png)\n", encoding="utf-8")
+
+        monkeypatch.setattr(pipeline, "LocalVisionClient", lambda config: StubClient("Identical description"))
+        result = run_fix(tmp_path, config=make_config(tmp_path), dry_run=True)
+        assert len(result.tasks) == 2
+        assert len(result.duplicates) == 1
+        assert result.duplicates[0][2] == "Identical description"
+
     def test_help_lists_all_commands(self):
         runner = CliRunner()
         result = runner.invoke(app, ["--help"])
         assert result.exit_code == 0
         for command in ("scan", "fix", "pr", "review", "demo"):
             assert command in result.stdout
+
+    def test_scan_report(self, docs):
+        runner = CliRunner()
+        result = runner.invoke(app, ["scan", str(docs), "--report"])
+        assert result.exit_code == 0
+        assert "directory summary" in result.stdout.lower()

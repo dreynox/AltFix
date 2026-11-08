@@ -184,21 +184,47 @@ def diff_only_alt_text(original: str, updated: str) -> bool:
     Used by the evaluation suite: the changed lines must differ only inside
     an alt attribute, a Markdown image span or an RST ``:alt:`` option.
     """
+    import difflib
+    import re
+
     original_lines = original.splitlines()
     updated_lines = updated.splitlines()
-    if len(original_lines) != len(updated_lines):
-        return False
-    for old, new in zip(original_lines, updated_lines):
-        if old == new:
+    if len(original_lines) == len(updated_lines):
+        for old, new in zip(original_lines, updated_lines):
+            if old == new:
+                continue
+            if _line_is_alt_only(old, new):
+                continue
+            return False
+        return True
+
+    # If line counts differ (e.g. inserted RST :alt: option), verify diff chunks
+    matcher = difflib.SequenceMatcher(None, original_lines, updated_lines)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
             continue
-        if _line_is_alt_only(old, new):
-            continue
-        return False
+        if tag == "insert":
+            for line in updated_lines[j1:j2]:
+                if not re.match(r"^\s*:alt:\s*.*$", line):
+                    return False
+        elif tag == "replace":
+            old_chunk = original_lines[i1:i2]
+            new_chunk = updated_lines[j1:j2]
+            if len(old_chunk) == len(new_chunk):
+                for old, new in zip(old_chunk, new_chunk):
+                    if not _line_is_alt_only(old, new):
+                        return False
+            else:
+                return False
+        else:
+            return False
     return True
 
 
 def _line_is_alt_only(old: str, new: str) -> bool:
     """True when two lines differ only in their alt text."""
+    import re
+
     if old.replace(" ", "") == new.replace(" ", ""):
         return True
     # Markdown: ![old](src) -> ![new](src)
@@ -206,10 +232,10 @@ def _line_is_alt_only(old: str, new: str) -> bool:
     stripped_new = _strip_md_alt(new)
     if stripped_old == stripped_new:
         return True
-    # HTML: alt="old" -> alt="new"
-    stripped_old = _strip_html_alt(old)
-    stripped_new = _strip_html_alt(new)
-    if stripped_old == stripped_new:
+    # HTML: alt attribute modified or inserted
+    no_alt_old = re.sub(r'\s*\balt\s*=\s*(?:"[^"]*"|\'[^\']*\'|\S+)', "", old)
+    no_alt_new = re.sub(r'\s*\balt\s*=\s*(?:"[^"]*"|\'[^\']*\'|\S+)', "", new)
+    if no_alt_old == no_alt_new:
         return True
     # RST: :alt: old -> :alt: new
     stripped_old = _strip_rst_alt(old)

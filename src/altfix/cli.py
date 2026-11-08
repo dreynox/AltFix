@@ -40,6 +40,9 @@ def scan(
     show_all: bool = typer.Option(
         False, "--all", help="Include images whose alt text is already fine."
     ),
+    report: bool = typer.Option(
+        False, "--report", help="Emit a directory-by-directory summary report."
+    ),
 ) -> None:
     """List images with missing or low quality alt text."""
     results = scan_path(path)
@@ -48,6 +51,37 @@ def scan(
         return
 
     counts = summarize(results)
+    if report:
+        dir_counts: dict[str, dict[str, int]] = {}
+        for result in results:
+            p = Path(result.file_path)
+            d = str(p.parent).replace("\\", "/") if str(p.parent) not in ("", ".") else "."
+            if d not in dir_counts:
+                dir_counts[d] = {"missing": 0, "low_quality": 0, "ok": 0, "decorative": 0, "total": 0}
+            for img in result.images:
+                dir_counts[d]["total"] += 1
+                dir_counts[d][img.classification.value] += 1
+
+        rep_table = Table(title="AltFix directory summary", border_style="blue")
+        rep_table.add_column("Directory", style="cyan")
+        rep_table.add_column("Total", justify="right", style="white")
+        rep_table.add_column("Missing", justify="right", style="red")
+        rep_table.add_column("Low Quality", justify="right", style="yellow")
+        rep_table.add_column("OK", justify="right", style="green")
+        rep_table.add_column("Decorative", justify="right", style="dim")
+        for d, c in sorted(dir_counts.items()):
+            rep_table.add_row(
+                d, str(c["total"]), str(c["missing"]), str(c["low_quality"]), str(c["ok"]), str(c["decorative"])
+            )
+        console.print(rep_table)
+        console.print(
+            f"[bold]Total:[/] [bold]{counts['missing']}[/] missing, "
+            f"[bold]{counts['low_quality']}[/] low quality, "
+            f"[bold]{counts['ok']}[/] ok, "
+            f"[bold]{counts['decorative']}[/] decorative"
+        )
+        return
+
     if json_out:
         payload = {
             "files": [
@@ -112,6 +146,7 @@ def fix(
     model: Optional[str] = typer.Option(None, "--model", help="Model id to use."),
     base_url: Optional[str] = typer.Option(None, "--base-url", help="Model server base URL."),
     limit: Optional[int] = typer.Option(None, "--limit", help="Only describe N images."),
+    jobs: int = typer.Option(1, "--jobs", "-j", help="Worker threads for describing images in parallel."),
 ) -> None:
     """Describe images that need alt text and patch the documents."""
     config = _config(model=model, base_url=base_url)
@@ -127,6 +162,7 @@ def fix(
         use_cache=use_cache,
         dry_run=not write,
         limit=limit,
+        jobs=jobs,
     )
 
     if not result.tasks:
@@ -156,6 +192,11 @@ def fix(
         console.print(Panel(result.patches[0].diff(), title="Unified diff", border_style="green"))
         for patch in result.patches[1:]:
             console.print(Panel(patch.diff(), title=str(patch.file_path), border_style="green"))
+
+    if result.duplicates:
+        console.print(
+            f"[yellow]Warning: {len(result.duplicates)} duplicate description(s) detected across different images.[/]"
+        )
 
     review = len(result.needs_review)
     console.print(

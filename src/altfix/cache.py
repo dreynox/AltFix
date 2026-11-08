@@ -15,6 +15,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -63,6 +65,7 @@ class DescriptionCache:
         self.dir = Path(cache_dir).expanduser()
         self.enabled = enabled
         self.stats = CacheStats()
+        self._lock = threading.Lock()
         if self.enabled:
             self.dir.mkdir(parents=True, exist_ok=True)
 
@@ -84,15 +87,18 @@ class DescriptionCache:
             return None
         path = self._path(key)
         if not path.is_file():
-            self.stats.misses += 1
+            with self._lock:
+                self.stats.misses += 1
             return None
         try:
             with open(path, "r", encoding="utf-8") as handle:
                 record = json.load(handle)
         except (OSError, json.JSONDecodeError):
-            self.stats.misses += 1
+            with self._lock:
+                self.stats.misses += 1
             return None
-        self.stats.hits += 1
+        with self._lock:
+            self.stats.hits += 1
         return record
 
     def put(self, key: str, record: dict[str, Any]) -> None:
@@ -102,8 +108,9 @@ class DescriptionCache:
         record.setdefault("created_at", time.time())
         path = self._path(key)
         path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = path.with_suffix(".tmp")
+        tmp = path.with_suffix(f".{os.getpid()}_{threading.get_ident()}.tmp")
         with open(tmp, "w", encoding="utf-8") as handle:
             json.dump(record, handle, ensure_ascii=False, indent=2, sort_keys=True)
         tmp.replace(path)
-        self.stats.writes += 1
+        with self._lock:
+            self.stats.writes += 1

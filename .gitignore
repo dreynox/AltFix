@@ -3,6 +3,9 @@ __pycache__/
 *$py.class
 *.egg-info/
 .pytest_cache/
+.coverage
+coverage/
+htmlcov/
 .altfix-cache/
 .altfix/
 .venv/
