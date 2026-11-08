@@ -338,7 +338,9 @@ def demo(
         console.print(f"[red]Sample repository not found at {sample}[/]")
         raise typer.Exit(code=1)
 
-    config = _config(model=model)
+    pregenerated = Path(__file__).resolve().parents[2] / "demo" / "pregenerated_cache"
+    cache_dir = str(pregenerated) if (pregenerated.is_dir() and use_cache) else None
+    config = _config(model=model, cache_dir=cache_dir) if cache_dir else _config(model=model)
     console.print(
         f"[bold]AltFix demo[/] on {sample}\n"
         f"model: {config.model}\n"

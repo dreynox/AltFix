@@ -1,0 +1,9 @@
+{
+  "banner": "PRE-GENERATED DEMO OUTPUT - these descriptions were produced by an earlier real run of the local model and are cached for a fast, reproducible demo. They are not mocked or hand written.",
+  "model": "qwen3.5-9b",
+  "prompt_version": "v1",
+  "base_url": "http://localhost:1234/v1",
+  "temperature": 0.2,
+  "seed": 42,
+  "images_described": 2
+}
